@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dashboard</title>
+    </head>
+    <body>
+        {% for station, stationData in data %}
+        <h3>{{ station }}</h3>
+        <table>
+            <tr>
+                {% for date in period %}
+                    {% set dateStr = date.format('Y-m-d') %}
+                        <td>
+                            {{ date.format('d.m.Y') }}
+                            {% if stationData[dateStr] is defined %}
+                                <br /><br />
+                                {% for equipment, amounts in stationData[dateStr] %}
+                                    {{ amounts['demand'] }} x {{ equipmentText[equipment] }}
+                                    ({{ amounts['available'] }} available)<br />
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                {% endfor %}
+            </tr>
+        </table>
+        {% endfor %}
+    </body>
+</html>
